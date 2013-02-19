@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-version = '1.0dev'
+version = '1.0'
 
 
 def read(*rnames):
