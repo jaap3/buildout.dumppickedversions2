@@ -35,7 +35,7 @@ setup(name='buildout.dumppickedversions2',
       namespace_packages=['buildout'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['zc.buildout'],
+      install_requires=['zc.buildout>=2.0.1'],
       extras_require={'test': ['zope.testing']},
       entry_points={
           'zc.buildout.extension': [
