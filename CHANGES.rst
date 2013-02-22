@@ -1,7 +1,7 @@
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Explicitly require buildout 2.0.1
 
 
 1.0.1 (2013-02-19)
