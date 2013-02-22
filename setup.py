@@ -9,12 +9,12 @@ def read(*rnames):
 
 
 long_description = '\n'.join((
-    read('README.txt'),
+    read('README.rst'),
     'Detailed Documentation',
     '======================',
-    read('buildout', 'dumppickedversions2', 'dumppickedversions2.txt'),
-    read('CHANGES.txt'),
-    read('CONTRIBUTORS.txt'),
+    read('buildout', 'dumppickedversions2', 'dumppickedversions2.rst'),
+    read('CHANGES.rst'),
+    read('CONTRIBUTORS.rst'),
 ))
 
 

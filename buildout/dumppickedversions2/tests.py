@@ -8,7 +8,7 @@ from zc.buildout import testing
 from zope.testing import renormalizing
 
 NORMALIZE_VERSION = (
-    re.compile(r'[0-9]+(?:\.[0-9])+(?:dev|alpha|beta|a|b)?[0-9]*'), 'N.N'
+    re.compile(r'[0-9]+(?:\.[0-9])+\.?(?:dev|alpha|beta|a|b)?[0-9]*'), 'N.N'
 )
 
 FLAGS = (
@@ -37,7 +37,7 @@ def test_suite():
     """
     Create a test suite from our doctests.
     """
-    test = 'dumppickedversions2.txt'
+    test = 'dumppickedversions2.rst'
     checker = renormalizing.RENormalizing([NORMALIZE_VERSION])
     suite = [doctest.DocFileSuite(test, optionflags=FLAGS,
                                   setUp=setup, tearDown=teardown,
