@@ -1,4 +1,4 @@
-1.0.3 (unreleased)
+1.0.3 (2013-02-26)
 ------------------
 
 - Now includes "required by" data
