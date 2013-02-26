@@ -1,7 +1,7 @@
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Now includes "required by" data
 
 
 1.0.2 (2013-02-22)
