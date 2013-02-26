@@ -2,6 +2,7 @@
 Make buildout.dumppickedversion's features work in buildout 2
 """
 import os
+import zc.buildout.easy_install
 from zc.buildout.buildout import print_
 
 FILE_NAME = 'dump-picked-versions-file'
@@ -45,9 +46,11 @@ def install(buildout):
 
     if file_name is None:
         # Simply enable buildout's show-picked-versions feature
+        zc.buildout.easy_install.store_picked_versions(True)
         buildout.show_picked_versions = True
     else:
         # Monkey patch buildout to enable overwriting behaviour
+        zc.buildout.easy_install.store_picked_versions(True)
         buildout.update_versions_file = file_name
         buildout._print_picked_versions = dump_picked_versions(
             buildout._print_picked_versions, file_name, overwrite)
