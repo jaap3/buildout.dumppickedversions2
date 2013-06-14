@@ -1,7 +1,7 @@
-1.0.4 (unreleased)
-------------------
+1.1 (2013-06-14)
+----------------
 
-- Nothing changed yet.
+- Uses the new pickedversions plugin API when it becomes available
 
 
 1.0.3 (2013-02-26)
