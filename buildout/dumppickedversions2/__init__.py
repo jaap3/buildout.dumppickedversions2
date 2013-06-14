@@ -4,6 +4,10 @@ Make buildout.dumppickedversion's features work in buildout 2
 import os
 import zc.buildout.easy_install
 from zc.buildout.buildout import print_
+try:
+    from zc.buildout.buildout import _format_picked_versions
+except ImportError:
+    _format_picked_versions = None  # buildout < 2.2
 
 FILE_NAME = 'dump-picked-versions-file'
 OVERWRITE = 'overwrite-picked-versions-file'
@@ -36,21 +40,46 @@ def dump_picked_versions(old_print_picked_versions, file_name, overwrite):
     return overwrite_picked_versions
 
 
+def _file_name_and_overwrite(section):
+    file_name = (FILE_NAME in section and section[FILE_NAME].strip() or None)
+    overwrite = (OVERWRITE not in section or section[OVERWRITE].lower() in TRUE)
+    return (file_name, overwrite)
+
+
 def install(buildout):
     """
     Hook into buildout and alter it's version dumping behavior.
     """
-    section = buildout['buildout']
-    file_name = (FILE_NAME in section and section[FILE_NAME].strip() or None)
-    overwrite = (OVERWRITE not in section or section[OVERWRITE].lower() in TRUE)
-
+    file_name, overwrite = _file_name_and_overwrite(buildout['buildout'])
+    if hasattr(zc.buildout.easy_install , 'store_required_by'):
+        store_required_by = zc.buildout.easy_install.store_required_by
+    else:  # buildout < 2.2
+        store_required_by = zc.buildout.easy_install.store_picked_versions
+    store_required_by(True)
     if file_name is None:
-        # Simply enable buildout's show-picked-versions feature
-        zc.buildout.easy_install.store_picked_versions(True)
+        # Simply enable buildout's show-picked-versions feature      
         buildout.show_picked_versions = True
-    else:
+    elif _format_picked_versions is None:  # buildout < 2.2
         # Monkey patch buildout to enable overwriting behaviour
-        zc.buildout.easy_install.store_picked_versions(True)
         buildout.update_versions_file = file_name
         buildout._print_picked_versions = dump_picked_versions(
             buildout._print_picked_versions, file_name, overwrite)
+
+
+def uninstall(buildout):
+    if _format_picked_versions:
+        file_name, overwrite = _file_name_and_overwrite(buildout['buildout'])
+
+        if file_name is None:
+            return
+        if os.path.isfile(file_name) and not overwrite:
+            print_('Skipped: File %s already exists.' % file_name)
+        else:
+            picked_versions, required_by = (zc.buildout.easy_install
+                                            .get_picked_versions())
+            output = _format_picked_versions(picked_versions, required_by)
+            f = open(file_name, 'wb')
+            f.write('\n'.join(output))
+            f.close()
+            print_('Picked versions have been written to %s' % file_name)
+

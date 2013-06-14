@@ -4,7 +4,7 @@ Let's create an egg to use it in our tests::
     >>> write('myegg', 'setup.py',
     ... '''
     ... from distutils.core import setup
-    ... setup(name='myegg', version='1.0',)
+    ... setup(name='myegg', version='1.0')
     ... ''')
     >>> write('myegg', 'README', '')
     >>> print system(buildout + ' setup myegg bdist_egg')
@@ -34,7 +34,7 @@ Running the buildout will print information about picked versions::
     The following part definition lists the versions picked:
     [versions]
     myegg = N.N
-    zc.buildout = N.N
+    setuptools = N.N
     zc.recipe.egg = N.N
     ...
 
@@ -66,7 +66,7 @@ And here is the content of the file versions.cfg::
     >>> cat('versions.cfg')
     [versions]
     myegg = N.N
-    zc.buildout = N.N
+    setuptools = N.N
     zc.recipe.egg = N.N
 
 Next time we run the buildout the file will be overwritten::
@@ -80,7 +80,7 @@ Next time we run the buildout the file will be overwritten::
     >>> cat('versions.cfg')
     [versions]
     myegg = N.N
-    zc.buildout = N.N
+    setuptools = N.N
     zc.recipe.egg = N.N
 
 Let's create a new egg to use it in our tests, it will require
@@ -121,8 +121,8 @@ and who required them::
     Versions had to be automatically picked.
     The following part definition lists the versions picked:
     [versions]
+    setuptools = N.N
     theiregg = N.N
-    zc.buildout = N.N
     zc.recipe.egg = N.N
     <BLANKLINE>
     # Required by:
@@ -157,8 +157,8 @@ And here is the content of the file versions.cfg::
     
     >>> cat('versions.cfg')
     [versions]
+    setuptools = N.N
     theiregg = N.N
-    zc.buildout = N.N
     zc.recipe.egg = N.N
     <BLANKLINE>
     # Required by:

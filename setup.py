@@ -40,6 +40,9 @@ setup(name='buildout.dumppickedversions2',
       entry_points={
           'zc.buildout.extension': [
               'default = buildout.dumppickedversions2:install'
+          ],
+          'zc.buildout.unloadextension': [
+              'default = buildout.dumppickedversions2:uninstall'
           ]
       },
 )
